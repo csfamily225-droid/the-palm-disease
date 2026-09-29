@@ -1,0 +1,8 @@
+INSTRUCTIONS FOR YOUR TFLITE MODEL:
+=====================================
+1. Run the Google Colab notebook (colab_training/palm_disease_mobilenetv2_colab.ipynb) on your 5,630 dataset.
+2. The notebook will export and automatically download 'palm_model.tflite' and 'labels.txt'.
+3. Copy the downloaded 'palm_model.tflite' and 'labels.txt' into this exact folder:
+   mobile_app/assets/models/palm_model.tflite
+   mobile_app/assets/models/labels.txt
+4. Run 'flutter run' on your connected Android or iOS device!

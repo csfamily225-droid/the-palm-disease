@@ -1,0 +1,212 @@
+{
+  "Dubas": {
+    "displayName": "Dubas Bug Infestation",
+    "scientificName": "Ommatissus lybicus (de Bergevin)",
+    "category": "Insect Pest",
+    "severity": "High",
+    "colorHex": "#D32F2F",
+    "description": "The Dubas bug is one of the most destructive sucking insect pests of date palms across the Middle East, North Africa, and South Asia. Both nymphs and adults feed on date palm fronds and fruit bunches by puncturing the plant tissue and sucking the vital sap. During feeding, they excrete massive amounts of sticky sugary honeydew covering leaflets and fruit, leading to severe tree exhaustion, premature frond drying, and heavy fruit drop.",
+    "symptoms": [
+      "Heavy accumulation of sticky, shining liquid droplets (honeydew) on palm fronds and fruit bunches.",
+      "Dust and dirt adhering to sticky fronds, giving the foliage a dirty, grimy appearance.",
+      "Yellowing (chlorosis) of leaflets followed by gradual browning and premature desiccation.",
+      "Weakening of the palm crown with stunted frond elongation.",
+      "Black secondary fungal crust (sooty mold) developing on the honeydew coat."
+    ],
+    "causes": [
+      "Favorable warm and humid microclimates inside dense, un-pruned date palm orchards.",
+      "Overcrowded tree spacing preventing solar penetration and air circulation.",
+      "Peak generations occurring during Spring (March-May) and Autumn (September-November)."
+    ],
+    "culturalControl": [
+      "Prune and burn heavily infested lower fronds immediately after harvest.",
+      "Maintain recommended tree spacing (at least 8 x 8 meters) to allow adequate aeration and sunlight.",
+      "Adopt drip or regulated basin irrigation to minimize excess orchard humidity.",
+      "Regularly weed out wild grasses and ground cover beneath the palm canopy."
+    ],
+    "chemicalControl": [
+      "Apply selective systemic insecticides such as Acetamiprid, Thiamethoxam, or Imidacloprid during early nymph emergence.",
+      "Use mineral agricultural oils or potassium salt insecticidal soaps as eco-friendly contact sprays.",
+      "Ensure uniform spray coverage reaching both upper and lower surfaces of the fronds."
+    ]
+  },
+  "Bug": {
+    "displayName": "Palm Borer / Pest Damage",
+    "scientificName": "Oryctes elegans / Rhynchophorus ferrugineus",
+    "category": "Insect Pest",
+    "severity": "Critical",
+    "colorHex": "#B71C1C",
+    "description": "Palm bugs and borers, including the Rhinoceros beetle and Weevil larvae, chew deep into the tender growing points, petioles, and frond midribs. Adult beetles bore into unopened fronds causing distinct geometrical cuts, while larvae tunnel internally through the trunk and vascular bundles. Severe infestations can structurally compromise the frond or kill the palm apical meristem entirely.",
+    "symptoms": [
+      "V-shaped or symmetrical geometrical notches and holes cut cleanly through leaflets once fronds unfold.",
+      "Presence of fibrous chewings, sawdust-like frass, and brownish viscous fluid oozing from boreholes.",
+      "Sudden drooping, snapping, or hanging down of outer palm fronds.",
+      "Hollow or sponge-like sound when tapping the infested sections of the trunk or petiole bases.",
+      "In severe cases, complete collapse of the central growing crown."
+    ],
+    "causes": [
+      "Untreated pruning wounds that emit volatile kairomones attracting adult beetles.",
+      "Presence of decaying palm logs, dead trunks, or unmanaged organic debris nearby.",
+      "Lack of regular visual inspection and protective wound sealing."
+    ],
+    "culturalControl": [
+      "Immediately seal all cut frond bases and pruning wounds with asphalt mastic or protective copper paste.",
+      "Eradicate and incinerate dead palms, stumps, and fallen vegetative matter to eliminate breeding habitats.",
+      "Install pheromone and kairomone aggregation bucket traps around orchard borders."
+    ],
+    "chemicalControl": [
+      "Trunk injection or soil drenching using systemic insecticides (e.g., Emamectin benzoate or Imidacloprid).",
+      "Crown dusting of frond axils with Chlorpyrifos-based or Diazinon dust granules prior to peak flight seasons.",
+      "Apply entomopathogenic nematodes (*Steinernema carpocapsae*) or *Beauveria bassiana* fungi for bio-control."
+    ]
+  },
+  "Honey": {
+    "displayName": "Honeydew & Sooty Mold",
+    "scientificName": "Capnodium / Cladosporium spp.",
+    "category": "Fungal / Pest Complex",
+    "severity": "Moderate",
+    "colorHex": "#F57C00",
+    "description": "Honeydew is a sticky, sugar-rich excretion deposited on palm leaflets by sap-sucking insects (aphids, mealybugs, and planthoppers). While the secretion itself does not penetrate the epidermal cells, it serves as an ideal nutrient substrate for saprophytic black sooty mold fungi. The resulting dense, dark fungal layer blocks sunlight from reaching chlorophyll, drastically inhibiting photosynthesis and weakening the palm.",
+    "symptoms": [
+      "Dark charcoal-like, velvety black coating covering leaflets and petiole surfaces.",
+      "Fronds feel tacky, sticky, or gummy to the touch.",
+      "Attraction of large numbers of ants, wasps, and flies feeding on the sweet exudate.",
+      "Retarded vegetative growth and diminished sugar accumulation in ripening dates.",
+      "The black fungal layer can often be rubbed or washed off, revealing pale yellow leaflet tissue underneath."
+    ],
+    "causes": [
+      "High population densities of sap-feeding insects (Dubas bugs, scales, aphids).",
+      "Stagnant, humid orchard microclimate with inadequate wind movement.",
+      "Over-irrigation combined with excessive nitrogenous fertilizer application."
+    ],
+    "culturalControl": [
+      "Control the primary insect vectors producing the honeydew excretion.",
+      "Wash affected fronds with high-pressure water sprays mixed with 1% mild horticultural detergent to dislodge mold.",
+      "Thin out overcrowding crowns and remove low-hanging senescent fronds.",
+      "Regulate nitrogen fertilization to avoid excessive succulent leaf tissue."
+    ],
+    "chemicalControl": [
+      "Spray copper oxychloride (2.5 g/L) or copper hydroxide to eliminate the saprophytic fungal film.",
+      "Combine fungicidal treatment with an insecticidal spray (e.g., Pyriproxyfen or Buprofezin) to stop vector re-infestation.",
+      "Apply light summer horticultural oils to dissolve honeydew crusts and suffocate scale insects."
+    ]
+  },
+  "White_Scale": {
+    "displayName": "White Scale Disease",
+    "scientificName": "Parlatoria blanchardi (Targioni-Tozzetti)",
+    "category": "Armored Scale Insect",
+    "severity": "High",
+    "colorHex": "#7B1FA2",
+    "description": "The date palm white scale is a small armored scale insect that forms dense colonies on leaflets, rachis, fruit stalks, and developing dates. The female scales are protected beneath a whitish, oval, wax-like protective shield. They suck sap continuously, injecting toxic saliva into plant tissues, causing chlorotic spotting, rapid leaflet necrosis, and unmarketable dates covered in white crusts.",
+    "symptoms": [
+      "Dense, crust-like encrustations of tiny, white, circular or oval waxy scales covering both sides of leaflets.",
+      "Distinct yellow halos forming around scale feeding sites on green leaflets.",
+      "Extensive drying, curling, and premature death of leaflets progressing from lower to upper fronds.",
+      "Infested fruits remain small, stunted, deformed, and covered with unsightly white scales.",
+      "Severely infested young offshoots fail to establish roots and frequently perish."
+    ],
+    "causes": [
+      "Dry, hot climatic conditions accompanied by dusty winds that deter natural insect predators.",
+      "Transport of infested offshoots and nursery palm seedlings into healthy orchards.",
+      "Absence of natural biological parasitoids (*Aphytis mytilaspidis*) due to broad-spectrum insecticide overuse."
+    ],
+    "culturalControl": [
+      "Quarantine and inspect all incoming offshoots and planting stock before transplanting.",
+      "Prune heavily infested lower fronds prior to seasonal offshoot emergence and burn them safely.",
+      "Introduce or protect predatory coccinellid ladybird beetles (*Chilocorus bipustulatus*, *Pharoscymnus anchorago*)."
+    ],
+    "chemicalControl": [
+      "Spray narrow-range horticultural mineral oil (1.5-2%) during off-season dormancy or early nymph crawler emergence.",
+      "Use insect growth regulators (IGRs) like Pyriproxyfen or Buprofezin that disrupt scale molting without harming bees.",
+      "For severe outbreaks, apply systemic organophosphates or Spirotetramat with an agricultural surfactant."
+    ]
+  },
+  "Brown_Spots": {
+    "displayName": "Brown Leaf Spot (Blight)",
+    "scientificName": "Mycosphaerella / Alternaria / Bipolaris spp.",
+    "category": "Fungal Infection",
+    "severity": "Moderate to High",
+    "colorHex": "#8D6E63",
+    "description": "Brown leaf spot is a widespread foliar fungal disease affecting date palms worldwide. It is caused by fungal pathogens such as Mycosphaerella, Alternaria, and Bipolaris that penetrate frond stomata and micro-wounds during wet periods. The disease manifests as discrete necrotic brown lesions that coalesce, destroying photosynthesizing leaf area and leading to premature frond collapse.",
+    "symptoms": [
+      "Small, circular to elliptical reddish-brown or dark brown spots on leaflets and frond midribs.",
+      "Spots often develop a grayish-white necrotic center surrounded by a pronounced dark margin and yellow chlorotic halo.",
+      "Multiple lesions enlarge and coalesce into extensive dry brown blighted patches.",
+      "Premature yellowing, withering, and death of older fronds from the leaflet tips downward.",
+      "Tiny black specks (fungal fruiting bodies/pycnidia) visible inside older lesions under a magnifying glass."
+    ],
+    "causes": [
+      "Prolonged leaf wetness due to overhead sprinkler irrigation, morning dew, or rain.",
+      "High relative humidity coupled with warm temperatures (22°C to 30°C).",
+      "Nutrient deficiencies, particularly potassium (K) and magnesium (Mg), predisposing palms to infection.",
+      "Over-crowded plantations with poor sunlight penetration."
+    ],
+    "culturalControl": [
+      "Avoid overhead sprinkler irrigation; convert to drip or subsurface irrigation to keep palm foliage completely dry.",
+      "Prune and dispose of severely infected lower fronds before seasonal fungal spore release.",
+      "Balance soil fertility with adequate potassium and micro-nutrients to reinforce leaf cuticle resilience.",
+      "Disinfect pruning tools with 10% sodium hypochlorite (bleach) between palms."
+    ],
+    "chemicalControl": [
+      "Apply protective copper fungicides (Bordeaux mixture 1%, Copper Oxychloride 3 g/L) at the onset of humid conditions.",
+      "For active infections, apply systemic triazole fungicides such as Difenoconazole, Tebuconazole, or Azoxystrobin.",
+      "Rotate fungicide chemical classes to prevent the emergence of resistant fungal strains."
+    ]
+  },
+  "Healthy": {
+    "displayName": "Healthy Palm Frond",
+    "scientificName": "Phoenix dactylifera L.",
+    "category": "Healthy Plant",
+    "severity": "None",
+    "colorHex": "#2E7D32",
+    "description": "This palm tree frond displays excellent vigor, uniform green coloration, and robust structural integrity with no signs of pathological lesions, insect boreholes, scales, or fungal coatings. The palm is actively performing photosynthesis and supporting healthy date bunch development.",
+    "symptoms": [
+      "Uniform vibrant green coloration across all leaflets without chlorosis.",
+      "Intact leaflet margins with no chewing notches or feeding punctures.",
+      "Clean, smooth petiole and midrib free of waxy scales, sap ooze, or honeydew.",
+      "Healthy vegetative crown balance and vigorous upright frond growth."
+    ],
+    "causes": [
+      "Optimal irrigation schedule matched to tree age and climatic evapotranspiration.",
+      "Balanced macro and micronutrient soil availability.",
+      "Effective routine pruning, aeration, and proactive pest monitoring."
+    ],
+    "culturalControl": [
+      "Maintain periodic irrigation intervals based on local soil moisture conditions.",
+      "Apply balanced organic compost and balanced NPK fertilizers (ratio 3:1:3) twice annually.",
+      "Perform regular visual surveillance of frond undersides every 2-3 weeks for early pest detection."
+    ],
+    "chemicalControl": [
+      "No chemical treatment required.",
+      "Optional preventative dormant wash with 1% horticultural oil during winter months."
+    ]
+  },
+  "Unrecognized": {
+    "displayName": "Not Recognized as Palm Tree",
+    "scientificName": "Out-of-Distribution Input",
+    "category": "Non-Palm Image / Unrecognized Object",
+    "severity": "Warning",
+    "colorHex": "#FF8F00",
+    "description": "The captured image does not match the visual characteristics or leaflet architecture of a date palm tree (Phoenix dactylifera). This neural network model is specialized exclusively for palm tree frond pathology and has determined with high certainty that this image represents another plant species, a non-agricultural object, or an unidentifiable blurry photo.",
+    "symptoms": [
+      "Visual pattern mismatch with date palm fronds, leaflets, or crown structures.",
+      "The image may be of another crop (e.g., apple, tomato, maize, citrus) or an everyday object.",
+      "The image might be severely blurry, over-exposed, dark, or out of focus."
+    ],
+    "causes": [
+      "User uploaded an image of a different plant species or non-plant object.",
+      "Camera was held too close, too far, or moved during exposure causing severe motion blur.",
+      "Subject is not clearly framed inside the camera viewfinder."
+    ],
+    "culturalControl": [
+      "Ensure you are photographing a genuine Date Palm tree frond or leaflet.",
+      "Hold the smartphone steady 20 to 50 cm away from the affected frond section.",
+      "Ensure clear daylight lighting without harsh direct sun glare or deep shadows.",
+      "Clean your smartphone camera lens from dust or oil residue."
+    ],
+    "chemicalControl": [
+      "No agricultural chemicals should be applied based on this result.",
+      "Please recapture a clear, well-focused photo of a palm tree leaflet."
+    ]
+  }
+}

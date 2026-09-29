@@ -1,0 +1,30 @@
+name: palm_disease_detector
+description: "Smart Palm Tree Disease Detection Mobile Application (100% Offline with TensorFlow Lite)"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  image_picker: ^1.1.2
+  tflite_flutter: ^0.12.1
+  image: ^4.2.0
+  google_fonts: ^6.2.1
+  percent_indicator: ^4.2.3
+  flutter_spinkit: ^5.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/models/
+    - assets/data/
