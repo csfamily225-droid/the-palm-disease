@@ -2,7 +2,9 @@ name: Build Palm Disease APK
 
 on:
   push:
-    branches: [ main, master ]
+    branches:
+      - main
+      - master
   workflow_dispatch:
 
 jobs:
@@ -10,36 +12,59 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v7
 
+      # --------------------------------------------------
+      # 1. Download project source code
+      # --------------------------------------------------
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+
+      # --------------------------------------------------
+      # 2. Install Java 17
+      # --------------------------------------------------
       - name: Setup Java OpenJDK 17
-        uses: actions/setup-java@v6
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '17'
 
+
+      # --------------------------------------------------
+      # 3. Install Flutter
+      # --------------------------------------------------
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           cache: true
 
+
+      # --------------------------------------------------
+      # 4. Create a fresh Android folder
+      # --------------------------------------------------
       - name: Regenerate fresh Android folder
         run: |
           rm -rf android
           flutter create . --platforms android --org com.example
 
+
+      # --------------------------------------------------
+      # 5. Restore camera and image permissions
+      # --------------------------------------------------
       - name: Restore camera permissions in AndroidManifest
         run: |
           cat > android/app/src/main/AndroidManifest.xml << 'EOF'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
               <uses-permission android:name="android.permission.CAMERA" />
+
               <uses-permission
                   android:name="android.permission.READ_EXTERNAL_STORAGE"
                   android:maxSdkVersion="32" />
-              <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
+              <uses-permission
+                  android:name="android.permission.READ_MEDIA_IMAGES" />
 
               <uses-feature
                   android:name="android.hardware.camera"
@@ -68,8 +93,8 @@ jobs:
                           android:resource="@style/NormalTheme" />
 
                       <intent-filter>
-                          <action android:name="android.intent.action.MAIN"/>
-                          <category android:name="android.intent.category.LAUNCHER"/>
+                          <action android:name="android.intent.action.MAIN" />
+                          <category android:name="android.intent.category.LAUNCHER" />
                       </intent-filter>
 
                   </activity>
@@ -83,59 +108,133 @@ jobs:
           </manifest>
           EOF
 
-      - name: Patch minSdk for TFLite
+
+      # --------------------------------------------------
+      # 6. Set minimum Android SDK for TensorFlow Lite
+      # --------------------------------------------------
+      - name: Configure Android SDK
         run: |
+
           if [ -f android/app/build.gradle.kts ]; then
-            sed -i 's/minSdk = flutter.minSdkVersion/minSdk = 21/g' android/app/build.gradle.kts
-            sed -i 's/minSdk = flutter.minSdk.toInt()/minSdk = 21/g' android/app/build.gradle.kts
+
+            sed -i \
+              's/minSdk = flutter.minSdkVersion/minSdk = 21/g' \
+              android/app/build.gradle.kts
+
+            sed -i \
+              's/minSdk = flutter.minSdk.toInt()/minSdk = 21/g' \
+              android/app/build.gradle.kts
+
           fi
 
           if [ -f android/app/build.gradle ]; then
-            sed -i 's/minSdkVersion flutter.minSdkVersion/minSdkVersion 21/g' android/app/build.gradle
-            sed -i 's/minSdkVersion flutter.minSdk/minSdkVersion 21/g' android/app/build.gradle
+
+            sed -i \
+              's/minSdkVersion flutter.minSdkVersion/minSdkVersion 21/g' \
+              android/app/build.gradle
+
+            sed -i \
+              's/minSdkVersion flutter.minSdk/minSdkVersion 21/g' \
+              android/app/build.gradle
+
           fi
 
-      - name: Configure JVM 17 for all Android modules
+
+      # --------------------------------------------------
+      # 7. Make Java and Kotlin use JVM 17
+      # --------------------------------------------------
+      - name: Configure Java and Kotlin JVM 17
         run: |
+
           cat >> android/build.gradle.kts <<'EOF'
 
-          // Force Java and Kotlin to use the same JVM target.
           subprojects {
+
               tasks.withType<org.gradle.api.tasks.compile.JavaCompile>().configureEach {
                   sourceCompatibility = "17"
                   targetCompatibility = "17"
               }
 
-              tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-                  kotlinOptions {
-                      jvmTarget = "17"
+              tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile>().configureEach {
+                  compilerOptions {
+                      jvmTarget.set(
+                          org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+                      )
                   }
               }
           }
+
           EOF
 
+
+      # --------------------------------------------------
+      # 8. Configure Android local.properties
+      # --------------------------------------------------
       - name: Write local.properties
         run: |
           echo "sdk.dir=$ANDROID_HOME" > android/local.properties
           echo "flutter.sdk=$FLUTTER_ROOT" >> android/local.properties
 
+
+      # --------------------------------------------------
+      # 9. Download Flutter dependencies
+      # --------------------------------------------------
       - name: Flutter pub get
         run: flutter pub get
 
-      - name: Check JVM configuration
+
+      # --------------------------------------------------
+      # 10. Check Java and Android configuration
+      # --------------------------------------------------
+      - name: Check Build Configuration
         run: |
-          echo "Java version:"
+
+          echo "======================================"
+          echo "JAVA VERSION"
+          echo "======================================"
+
           java -version
 
           echo ""
-          echo "Gradle configuration:"
+          echo "======================================"
+          echo "ANDROID GRADLE FILES"
+          echo "======================================"
+
+          find android -name "*.gradle" -o -name "*.gradle.kts"
+
+          echo ""
+          echo "======================================"
+          echo "JVM CONFIGURATION"
+          echo "======================================"
+
           grep -R "jvmTarget" android || true
-          grep -R "sourceCompatibility" android || true
-          grep -R "targetCompatibility" android || true
 
+          echo ""
+          echo "======================================"
+          echo "MIN SDK CONFIGURATION"
+          echo "======================================"
+
+          grep -R "minSdk" android/app || true
+
+          echo ""
+          echo "======================================"
+          echo "TARGET SDK CONFIGURATION"
+          echo "======================================"
+
+          grep -R "targetSdk" android/app || true
+
+
+      # --------------------------------------------------
+      # 11. Build release APK
+      # --------------------------------------------------
       - name: Build Release APK
-        run: flutter build apk --release --no-tree-shake-icons
+        run: |
+          flutter build apk --release --no-tree-shake-icons
 
+
+      # --------------------------------------------------
+      # 12. Upload APK
+      # --------------------------------------------------
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
