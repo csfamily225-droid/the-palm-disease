@@ -13,46 +13,47 @@ jobs:
 
     steps:
 
-      # --------------------------------------------------
-      # 1. Download project source code
-      # --------------------------------------------------
+      # ==================================================
+      # 1. Checkout project
+      # ==================================================
       - name: Checkout Code
         uses: actions/checkout@v4
 
 
-      # --------------------------------------------------
-      # 2. Install Java 17
-      # --------------------------------------------------
-      - name: Setup Java OpenJDK 17
+      # ==================================================
+      # 2. Setup Java 17
+      # ==================================================
+      - name: Setup Java 17
         uses: actions/setup-java@v5
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '17'
+          cache: gradle
 
 
-      # --------------------------------------------------
-      # 3. Install Flutter
-      # --------------------------------------------------
+      # ==================================================
+      # 3. Setup Flutter
+      # ==================================================
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
+          channel: stable
           cache: true
 
 
-      # --------------------------------------------------
-      # 4. Create a fresh Android folder
-      # --------------------------------------------------
-      - name: Regenerate fresh Android folder
+      # ==================================================
+      # 4. Regenerate Android project
+      # ==================================================
+      - name: Regenerate Android folder
         run: |
           rm -rf android
           flutter create . --platforms android --org com.example
 
 
-      # --------------------------------------------------
-      # 5. Restore camera and image permissions
-      # --------------------------------------------------
-      - name: Restore camera permissions in AndroidManifest
+      # ==================================================
+      # 5. Restore Android permissions
+      # ==================================================
+      - name: Configure AndroidManifest
         run: |
           cat > android/app/src/main/AndroidManifest.xml << 'EOF'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
@@ -109,10 +110,10 @@ jobs:
           EOF
 
 
-      # --------------------------------------------------
-      # 6. Set minimum Android SDK for TensorFlow Lite
-      # --------------------------------------------------
-      - name: Configure Android SDK
+      # ==================================================
+      # 6. Configure minimum SDK
+      # ==================================================
+      - name: Configure Minimum SDK
         run: |
 
           if [ -f android/app/build.gradle.kts ]; then
@@ -140,23 +141,40 @@ jobs:
           fi
 
 
-      # --------------------------------------------------
-      # 7. Make Java and Kotlin use JVM 17
-      # --------------------------------------------------
-      - name: Configure Java and Kotlin JVM 17
+      # ==================================================
+      # 7. Configure Java 17 + Kotlin 17
+      # ==================================================
+      - name: Configure JVM Toolchain 17
         run: |
 
           cat >> android/build.gradle.kts <<'EOF'
 
           subprojects {
 
+              plugins.withId("java") {
+
+                  extensions.configure<org.gradle.api.plugins.JavaPluginExtension> {
+
+                      toolchain {
+                          languageVersion.set(
+                              JavaLanguageVersion.of(17)
+                          )
+                      }
+                  }
+              }
+
               tasks.withType<org.gradle.api.tasks.compile.JavaCompile>().configureEach {
+
                   sourceCompatibility = "17"
                   targetCompatibility = "17"
+
+                  options.release.set(17)
               }
 
               tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile>().configureEach {
+
                   compilerOptions {
+
                       jvmTarget.set(
                           org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
                       )
@@ -167,74 +185,97 @@ jobs:
           EOF
 
 
-      # --------------------------------------------------
-      # 8. Configure Android local.properties
-      # --------------------------------------------------
-      - name: Write local.properties
+      # ==================================================
+      # 8. Add Gradle JVM validation configuration
+      # ==================================================
+      - name: Configure Gradle Properties
         run: |
+
+          cat >> android/gradle.properties <<'EOF'
+
+          kotlin.jvm.target.validation.mode=error
+
+          EOF
+
+
+      # ==================================================
+      # 9. Configure local.properties
+      # ==================================================
+      - name: Configure local.properties
+        run: |
+
           echo "sdk.dir=$ANDROID_HOME" > android/local.properties
+
           echo "flutter.sdk=$FLUTTER_ROOT" >> android/local.properties
 
 
-      # --------------------------------------------------
-      # 9. Download Flutter dependencies
-      # --------------------------------------------------
-      - name: Flutter pub get
-        run: flutter pub get
+      # ==================================================
+      # 10. Get Flutter packages
+      # ==================================================
+      - name: Flutter Pub Get
+        run: |
+          flutter pub get
 
 
-      # --------------------------------------------------
-      # 10. Check Java and Android configuration
-      # --------------------------------------------------
-      - name: Check Build Configuration
+      # ==================================================
+      # 11. Show build configuration
+      # ==================================================
+      - name: Verify Java and Gradle Configuration
         run: |
 
-          echo "======================================"
+          echo "=========================================="
           echo "JAVA VERSION"
-          echo "======================================"
+          echo "=========================================="
 
           java -version
 
           echo ""
-          echo "======================================"
-          echo "ANDROID GRADLE FILES"
-          echo "======================================"
+          echo "=========================================="
+          echo "JAVA HOME"
+          echo "=========================================="
 
-          find android -name "*.gradle" -o -name "*.gradle.kts"
-
-          echo ""
-          echo "======================================"
-          echo "JVM CONFIGURATION"
-          echo "======================================"
-
-          grep -R "jvmTarget" android || true
+          echo "$JAVA_HOME"
 
           echo ""
-          echo "======================================"
-          echo "MIN SDK CONFIGURATION"
-          echo "======================================"
+          echo "=========================================="
+          echo "MIN SDK"
+          echo "=========================================="
 
           grep -R "minSdk" android/app || true
 
           echo ""
-          echo "======================================"
-          echo "TARGET SDK CONFIGURATION"
-          echo "======================================"
+          echo "=========================================="
+          echo "TARGET SDK"
+          echo "=========================================="
 
           grep -R "targetSdk" android/app || true
 
+          echo ""
+          echo "=========================================="
+          echo "JVM TARGET"
+          echo "=========================================="
 
-      # --------------------------------------------------
-      # 11. Build release APK
-      # --------------------------------------------------
+          grep -R "jvmTarget" android || true
+
+          echo ""
+          echo "=========================================="
+          echo "JAVA TARGET"
+          echo "=========================================="
+
+          grep -R "targetCompatibility" android || true
+
+
+      # ==================================================
+      # 12. Build APK
+      # ==================================================
       - name: Build Release APK
         run: |
           flutter build apk --release --no-tree-shake-icons
 
 
-      # --------------------------------------------------
-      # 12. Upload APK
-      # --------------------------------------------------
+      # ==================================================
+      # 13. Upload APK
+      # ==================================================
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
