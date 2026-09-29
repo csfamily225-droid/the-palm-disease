@@ -95,6 +95,25 @@ jobs:
             sed -i 's/minSdkVersion flutter.minSdk/minSdkVersion 21/g' android/app/build.gradle
           fi
 
+      - name: Configure JVM 17 for all Android modules
+        run: |
+          cat >> android/build.gradle.kts <<'EOF'
+
+          // Force Java and Kotlin to use the same JVM target.
+          subprojects {
+              tasks.withType<org.gradle.api.tasks.compile.JavaCompile>().configureEach {
+                  sourceCompatibility = "17"
+                  targetCompatibility = "17"
+              }
+
+              tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+                  kotlinOptions {
+                      jvmTarget = "17"
+                  }
+              }
+          }
+          EOF
+
       - name: Write local.properties
         run: |
           echo "sdk.dir=$ANDROID_HOME" > android/local.properties
@@ -103,11 +122,16 @@ jobs:
       - name: Flutter pub get
         run: flutter pub get
 
-      - name: Check Android configuration
+      - name: Check JVM configuration
         run: |
-          echo "Checking Android Gradle configuration..."
-          grep -R "targetSdk" android/app || true
-          grep -R "minSdk" android/app || true
+          echo "Java version:"
+          java -version
+
+          echo ""
+          echo "Gradle configuration:"
+          grep -R "jvmTarget" android || true
+          grep -R "sourceCompatibility" android || true
+          grep -R "targetCompatibility" android || true
 
       - name: Build Release APK
         run: flutter build apk --release --no-tree-shake-icons
